@@ -1,0 +1,68 @@
+@model AttendeeList
+<div class="top">
+    <div class="row">
+        <div class="col">
+            <a href="/Home" class ="black_links" ><h1>Dojo Activity Center</h1></a>
+        </div>
+        <div class="col text-right header-top">
+            <p><a href="/Home" class ="black_links">HOME</a> | <a href="logout" class ="black_links">LOGOUT</a></p>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row"style="margin-top: 30px;">
+    <div class="col">
+        <h2>@ViewBag.Activity.Title</h2>
+    </div>
+    <div class="col text-center">
+        @{
+            if(@ViewBag.Activity.Creator.Userid == ViewBag.User.Userid)
+            {
+                <a href="/delete/@ViewBag.Activity.Activityid"><button class="btn btn-warning">Delete</button></a>
+            }
+            else {
+                bool alreadyRSVPd = false;
+                foreach(var attendee in @ViewBag.Activity.RSVPList)
+                {
+                    if(attendee.Userid == ViewBag.User.Userid)
+                {
+                    <a href="/unrsvp/@ViewBag.Activity.Activityid"><button class="btn btn-secondary">Un Join</button></a>
+                  alreadyRSVPd = true;
+                  break;
+                }
+              }
+              if(alreadyRSVPd == false)
+              {
+                  bool alreadyBusy = false;
+                  foreach(var activity in ViewBag.User.attendingActivites){
+                    if(activity.AnActivity.date == ViewBag.Activity.date)
+                {
+                    <p>Can not join... already have something scheduled then!</p>
+                    alreadyBusy = true;
+                    break;
+                }
+                }
+                if(alreadyBusy == false)
+                {
+
+                  <a href="/Join/@ViewBag.Activity.Activityid"><button class="btn btn-secondary">Join</button></a>
+                }
+              }
+            }
+        }
+    </div>
+</div>
+<h5>Event Coordinator: </h5>
+    <p>@ViewBag.Activity.Creator.Name</p>
+<h5>Description:</h5>
+<p>@ViewBag.Activity.Description</p>
+<h5>Participants:</h5>
+<ul>
+    @{
+        foreach(var participant in ViewBag.Activity.RSVPList)
+        {
+            <li>@participant.User.Name</li>
+
+        }
+    }
+</ul>

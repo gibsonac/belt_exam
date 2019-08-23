@@ -1,0 +1,54 @@
+@model AnActivity
+<div class="top">
+    <div class="row">
+        <div class="col">
+            <a href="/Home" class ="black_links" ><h1>Dojo Activity Center</h1></a>
+        </div>
+        <div class="col text-right header-top">
+            <p><a href="/Home" class ="black_links">HOME</a> | <a href="logout" class ="black_links">LOGOUT</a></p>
+        </div>
+    </div>
+</div>
+<hr>
+    <h3>Create an Activity</h3>
+    <form asp-controller="Home" asp-action="SubmitActivity" asp-route-id="@ViewBag.User.Userid">
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label asp-for="Title"for="validationDefault01">Title</label>
+      <span asp-validation-for="Title"></span>
+      <input asp-for="Title" type="text" class="form-control">
+    </div>
+    <div class="col-md-4 mb-4">
+      <label asp-for="Time" for="validationDefault02">Time</label>
+      <span asp-validation-for="Time"></span>
+      <input asp-for="Time" type="time" class="form-control" id="validationDefault02">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label asp-for="date" for="validationDefault03">Date</label>
+      <span asp-validation-for="date"></span>
+      <input asp-for="date" type="date" class="form-control" id="validationDefault03">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label asp-for="Duration"for="validationDefault04">Duration</label>
+      <span asp-validation-for="Duration"></span>
+      <input asp-for="Duration"type="number" class="form-control" id="validationDefault04">
+    </div>
+    <div class="col-md-3 mb-3">
+        <label asp-for="Hour_Min_Day"for="validationDefault05" style="color: white;">Length</label>
+        <span asp-validation-for="Hour_Min_Day"></span>
+        <select asp-for="Hour_Min_Day"class="form-control" id="exampleFormControlSelect1">
+            <option>Hours</option>
+            <option>Minutes</option>
+            <option>Days</option>
+        </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label asp-for="Description"for="exampleFormControlTextarea1">Description</label>
+    <span asp-validation-for="Description"></span>
+    <textarea asp-for="Description"class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <button class="btn btn-primary" type="submit">Create Activity</button>
+</form>

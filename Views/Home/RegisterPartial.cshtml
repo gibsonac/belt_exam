@@ -1,0 +1,35 @@
+@model User
+@{
+    ViewData["Title"] = "Home Page";
+}
+    <form asp-action="Register" asp-controller="Home" method="post">
+        <div class="form-group row">
+            <label for="inputEmail3" asp-for="Name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-7">
+            <span asp-validation-for="Name"></span>
+                <input type="text" asp-for="Name" class="form-control" id="inputEmail3" placeholder="Full Name Here">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" asp-for="Email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-7">
+                <span asp-validation-for="Email"></span>
+                <input type="email" asp-for="Email" class="form-control" id="inputEmail3"placeholder="Something@something.com">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword3" asp-for="Password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-7">
+                <span asp-validation-for="Password"></span>
+                <input type="password" asp-for="Password" class="form-control" id="inputPassword3" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword3" asp-for="password_confirm" class="col-sm-2 col-form-label">Confirm PW: </label>
+            <div class="col-sm-7">
+                <span asp-validation-for="password_confirm"></span>
+                <input type="password" asp-for="password_confirm" class="form-control" id="inputPassword3" placeholder="Confirm Password">
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+    </form>

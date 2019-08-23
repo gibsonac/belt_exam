@@ -1,0 +1,81 @@
+    @model List<AnActivity>
+    <div class="top">
+        <div class="row">
+            <div class="col">
+                <a href="/Home" class ="black_links" ><h1>Dojo Activity Center</h1></a>
+            </div>
+            <div class="col text-right header-top">
+                <p>Welcome, @ViewBag.User.Name | <a href="logout" class ="black_links">LOGOUT</a></p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Activity</th>
+      <th scope="col">Date and Time</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Event Coordinator</th>
+      <th scope="col">No. of Participants</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      @{
+        foreach(var activity in Model)
+        {
+          string format = "M/d";
+          string time = "hh:mm tt";
+          <tr>
+            <td><a href="/activity/@activity.Activityid">@activity.Title</a></td>
+            <td>@activity.date.ToString(format) at @activity.Time.ToString(time)</td>
+            <td>@activity.Duration @activity.Hour_Min_Day</td>
+            <td>@activity.Creator.Name</td>
+            <td>@activity.RSVPList.Count</td>
+            @if(@activity.Creator.Userid == ViewBag.User.Userid)
+            {
+              <td><a href="/delete/@activity.Activityid">DELETE</a></td>
+            }
+            else{
+                bool alreadyRSVPd = false;
+              foreach(var attendee in @activity.RSVPList)
+              {
+                if(attendee.Userid == ViewBag.User.Userid)
+                {
+                  <td><a href="/unrsvp/@activity.Activityid">UN Join</a></td>
+                  alreadyRSVPd = true;
+                  break;
+                }
+              }
+              if(alreadyRSVPd == false)
+              {
+                bool alreadyBusy = false;
+                foreach(var thisactivity in ViewBag.User.attendingActivites)
+                {
+                  if(thisactivity.AnActivity.date == activity.date)
+                  {
+                    <td>Already Busy</td>
+                    alreadyBusy = true;
+                    break;
+                  }
+                }
+                if(alreadyBusy == false)
+                {
+                <td><a href="/Join/@activity.Activityid">Join</a></td>
+                }
+              }
+            }
+        </tr>
+        }
+      }
+
+  </tbody>
+</table>
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <a href="/New"><button type="button" class="btn btn-secondary">Add New Activity</button></a>
+    </div>
+</div>
